@@ -1,0 +1,6 @@
+city,temperature_f,feels_like_f,humidity,weather,wind_speed_mph,timestamp
+Houston,79,84,79,Sunny,5,2026-05-29 11:41:38
+Chicago,72,76,49,Partly cloudy,2,2026-05-29 11:41:34
+Phoenix,71,71,38,Partly cloudy,4,2026-05-29 11:41:40
+New York,70,70,39,Sunny,10,2026-05-29 11:41:33
+Los Angeles,62,62,65,Sunny,2,2026-05-29 11:41:36
