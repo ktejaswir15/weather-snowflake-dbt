@@ -16,6 +16,8 @@ Orchestrated via Apache Airflow DAG with daily scheduling and retry logic.
 - REST API (wttr.in)
 
 ## How to Run
+git clone https://github.com/ktejaswir15/weather-data-pipeline.git
+cd weather-data-pipeline
 docker compose up -d
 # Open http://localhost:8080 (admin/admin)
 # Trigger weather_etl_pipeline DAG
