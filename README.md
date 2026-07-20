@@ -1,43 +1,32 @@
-# Weather Data Pipeline — Snowflake + dbt + Python
+# Weather Data Pipeline - Snowflake + dbt
 
-An end-to-end data engineering pipeline that ingests live weather data, loads it into Snowflake, and transforms it using dbt models with automated daily scheduling.
+End-to-end ELT pipeline that loads live weather data into Snowflake and transforms it with dbt.
 
-## Architecture
-## Tech Stack
+## What it does
 
-- **Python** — Data extraction and Snowflake loading
-- **Snowflake** — Cloud data warehouse (RAW schema)
-- **dbt** — SQL-based transformation modeling
-- **Open-Meteo API** — Free weather data source
-- **Python Schedule** — Daily pipeline orchestration
+- Extracts weather data from the Open-Meteo API
+- Loads raw records into Snowflake, authenticated via RSA key-pair (secure, password-free access)
+- Transforms data through dbt staging and mart layers, including feature engineering (temperature categorization, comfort index, wind classification)
+- Automated daily execution via Python scheduler with retry logic
 
-## Pipeline Layers
+## Tech stack
 
-| Layer | Model | Description |
-|---|---|---|
-| Raw | WEATHER_RAW | Raw API data loaded via Python |
-| Staging | stg_weather | Cleaned data + temp in Fahrenheit + temp category |
-| Mart | mart_weather | Final analytics table with comfort index + wind category |
+Python, Snowflake, dbt, Open-Meteo API, RSA key-pair authentication
 
-## dbt Models
+## How to run
 
-### stg_weather (Staging)
-- Casts and cleans raw weather data
-- Adds temperature in Fahrenheit
-- Categorizes temperature (Freezing / Cold / Mild / Warm / Hot)
+```
+python generate_key.py
+python extract.py
+dbt run
+python scheduler.py
+```
 
-### mart_weather (Mart)
-- Computes comfort index (Very Comfortable / Comfortable / Uncomfortable / Very Uncomfortable)
-- Classifies wind speed (Calm / Breezy / Windy / Very Windy)
-- Final analytics-ready table
+## Files
 
-## Setup
-
-1. Clone the repo
-2. Create `.env` file with Snowflake credentials
-3. Install dependencies: `pip install -r requirements.txt`
-4. Run pipeline: `python scheduler.py`
-
-## Security
-- RSA key-pair authentication for Snowflake (no passwords stored)
-- Credentials managed via `.env` (excluded from Git)
+| File | Description |
+|---|---|
+| generate_key.py | Generates RSA key pair for Snowflake auth |
+| extract.py | Extracts weather data and loads raw records into Snowflake |
+| weather_dbt/ | dbt project: staging and mart models |
+| scheduler.py | Automates daily pipeline runs with retry logic |
